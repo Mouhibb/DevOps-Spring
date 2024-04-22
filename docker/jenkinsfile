@@ -7,22 +7,22 @@ pipeline {
         dockerlatest = ''
     }
     stages {
-        stage('Clone') {
+        stage('clone') {
             steps {
                git 'https://github.com/Mouhibb/DevOps-Spring.git'
             }
         }
-        stage('Clean'){
+        stage('clean code'){
                 steps{
                    sh 'mvn clean'
                 }
         }
-        stage('Compile'){
+        stage('compile code'){
                  steps{
                    sh 'mvn compile'
                  }
         }
-        stage('Test'){
+        stage('test'){
             steps{
                sh 'mvn test'
             }
@@ -36,12 +36,12 @@ pipeline {
         stage('SonarQube') {
             steps{
                 withSonarQubeEnv('SonarQube') {
-              sh "mvn clean verify sonar:sonar -Dsonar.projectKey=DevOps-project"
+              sh "mvn clean verify sonar:sonar -Dsonar.projectKey=devops-spring"
             }
           }
         }
 
-        stage('Package'){
+        stage('package'){
             steps{
                sh 'mvn package'
             }
@@ -51,12 +51,12 @@ pipeline {
                     }
             }
         }
-        stage('Deploy Nexus'){
+        stage('deploy nexus'){
             steps{
                sh 'mvn deploy -DskipTests'
             }
         }
-        stage('Build image'){
+        stage('build image'){
             steps{
                 script {
                     dockerImage = docker.build registry + ":${env.BUILD_ID}"
@@ -64,7 +64,7 @@ pipeline {
                 }
             }
         }
-        stage('Push image'){
+        stage('push image'){
             steps{
               script {
                     docker.withRegistry( '', registryCredential ) {
@@ -74,7 +74,7 @@ pipeline {
               }
             }
         }
-        stage('Docker Compose'){
+        stage('docker compose'){
             steps{
                sh 'docker compose up -d'
             }

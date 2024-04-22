@@ -26,7 +26,6 @@ services:
       - monitor-net
     volumes:
       - nexus-data:/nexus-data
-# docker run -d -p 8081:8081 --name nexuswitoutvars sonatype/nexus3 => curl http://localhost:8081/nexus/service/local/status
 
   prometheus:
     container_name: prometheus

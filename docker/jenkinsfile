@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "hamzataoujouti/devops-spring"
+        registry = "mouhibtrabelsi/devops-spring"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
         dockerlatest = ''
@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('clone repo') {
             steps {
-               git 'https://github.com/tajoutihamza/DevOps-Spring-boot.git'
+               git 'https://github.com/Mouhibb/DevOps-Spring.git'
             }
         }
         stage('build code'){
@@ -58,8 +58,8 @@ pipeline {
                     dockerImage = docker.build registry + ":${env.BUILD_ID}"
                     dockerlatest = docker.build registry + ":latest"
                 }
-            //   sh "docker build -t hamzataoujouti/devops-spring:${env.BUILD_ID} ."
-            //   sh "docker image tag hamzataoujouti/devops-spring:${env.BUILD_ID} hamzataoujouti/devops-spring:latest"
+            //   sh "docker build -t mouhibtrabelsi/devops-spring:${env.BUILD_ID} ."
+            //   sh "docker image tag mouhibtrabelsi/devops-spring:${env.BUILD_ID} mouhibtrabelsi/devops-spring:latest"
             }
         }
         stage('docker image push'){
@@ -70,8 +70,8 @@ pipeline {
                         dockerlatest.push()
                     }
               }
-            //   sh "docker push hamzataoujouti/devops-spring:${env.BUILD_ID}"
-            //   sh 'docker push hamzataoujouti/devops-spring:latest'
+            //   sh "docker push mouhibtrabelsi/devops-spring:${env.BUILD_ID}"
+            //   sh 'docker push mouhibtrabelsi/devops-spring:latest'
             }
         }
         stage('docker compose'){
